@@ -1,4 +1,11 @@
 baseURL = "/"
 languageCode = "en-us"
-title = "Ely Lucas"
-theme = "ananke"
+title = "<ely.blog />"
+theme = "vienna"
+
+[params]
+subtitle = "Ely Lucas's thoughts on web, mobile, and software development"
+twitter = "elylucas"
+github = "elylucas"
+ga_api_key = "UA-6540991-1"
+disqus = "elyblog"
