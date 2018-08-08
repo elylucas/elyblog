@@ -9,27 +9,23 @@ dsq_thread_id:
 
 ---
 Attempting to use an if statement in JSX will quickly be met with lots of resistance. For instance, trying to conditionally render some content like so:
-
-<pre class="brush: xml; title: ; notranslate" title="">&lt;div&gt;
+```jsx
+<div>
   {
-    if(true) {    
-    
-    	&lt;div&gt;some conditional text&lt;/div&gt;   	 
-    
+    if(true) {
+      <div>some conditional text</div>;
     }
   }
-
-&lt;/div&gt;
-
-
-</pre>
+</div>
+```
 
 This will generate errors by the JSX transpiler. As discussed in the React docs, this is because JSX transpiles into a series of JavaScript function calls and object creation, where you can&#8217;t legally use an if statement. So how do you go about hiding and showing content based on some type of condition?
 
 There are a couple of examples on how you might achieve this in the docs. One common and well excepted option is to use a JavaScript expression:
 
-<pre class="brush: xml; title: ; notranslate" title="">{ shouldShow && &lt;div&gt;conditional content&lt;/div&gt; }
-</pre>
+```jsx
+{ shouldShow && <div>conditional content</div> }
+```
 
 This method takes advantage of short circuting in JavaScript. If the conditional is false, then the JSX on the right (which just compiles down to a React.createElemeent call) never gets executed.
 
@@ -37,8 +33,9 @@ At first this took awhile for me to get use to seeing in React codebases. But on
 
 To take this example another step further, you can also use ternary expressions inside of JSX like so:
 
-<pre class="brush: xml; title: ; notranslate" title="">{ showShow ? &lt;div&gt;Content A&lt;/div&gt; : &lt;div&gt;Content B&lt;/div&gt; }
-</pre>
+```jsx
+{ showShow ? <div>Content A</div> : <div>Content B</div> }
+```
 
 Ternarys become ugly quickly inside of JSX, and I wouldn&#8217;t recommend using them for less trivial examples.
 
@@ -48,32 +45,33 @@ We could define variables and set them conditionally outside of our return state
 
 The React docs also recommend using an inline iife to hide the conditional inside of a function like so:
 
-<pre class="brush: xml; title: ; notranslate" title="">&lt;div&gt;
+```jsx
+<div>
   {
-    (()=&gt;{
+    (()=>{
       if(false) {
 
-		&lt;div&gt;{test('truthy')}truthy&lt;/div&gt;
+		<div>{test('truthy')}truthy</div>
 
       } else{
 
-		&lt;div&gt;{test('falsey')}falsey&lt;/div&gt;
+		<div>{test('falsey')}falsey</div>
 
       }
     })()
   }
-&lt;/div&gt;
+</div>
+```
 
-</pre>
-
-The iife method works well in most cases, but at the same time it feels hacky and adds some script to our html. 
+The iife method works well in most cases, but at the same time it feels hacky and adds some script to our html.
 
 I have also seen approaches of wrapping the component in another conditional component and conditionally showing the inner components like so:
 
-<pre class="brush: xml; title: ; notranslate" title="">&lt;Maybe show={shouldShow}&gt;
-    	&lt;div&gt;Content&lt;/div&gt;
-    &lt;/Maybe&gt;
-</pre>
+```jsx
+<Maybe show={shouldShow}>
+  <div>Content</div>
+</Maybe>
+```
 
 The Maybe component would then check the show prop and conditionally render it. While I like this syntax, the drawback to this method is that the internal component will always be executed, no matter the value of show. Thie is because JSX will turn the child components into React.createElement calls, and then execute those calls, and pass the result as children to the Maybe component. This isn&#8217;t a big deal for just showing an hiding text content, but could have unintended performace consequences if you were passing in other React components.
 

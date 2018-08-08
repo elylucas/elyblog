@@ -2,6 +2,8 @@ baseURL = "/"
 languageCode = "en-us"
 title = "<ely.blog />"
 theme = "vienna"
+pygmentsCodeFences = true
+pygmentsStyle = "monokai"
 
 [params]
 subtitle = "Ely Lucas's thoughts on web, mobile, and software development"
@@ -9,3 +11,4 @@ twitter = "elylucas"
 github = "elylucas"
 ga_api_key = "UA-6540991-1"
 disqus = "elyblog"
+
